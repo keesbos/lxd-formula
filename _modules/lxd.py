@@ -3304,7 +3304,7 @@ def normalize_input_values(config, devices):
     # Golangs wants strings
     if config is not None:
         for k, v in six.iteritems(config):
-            config[k] = six.text_type(v)
+            config[k] = six.text_type(v).replace('\\n', '\n')
     if devices is not None:
         for dn in devices:
             for k, v in six.iteritems(devices[dn]):
@@ -3506,6 +3506,7 @@ def _set_property_dict_item(obj, prop, key, value):
         attr[key] = value
 
     else:  # config
+        value = value.replace('\\n', '\n')
         attr[key] = six.text_type(value)
 
     pylxd_save_object(obj)
